@@ -1,0 +1,7 @@
+com\matrix\orquestrador\Application.class
+com\matrix\orquestrador\model\ProcessExecution.class
+com\matrix\orquestrador\model\OrchestrationReport.class
+com\matrix\orquestrador\service\MatrixOrchestrator.class
+com\matrix\orquestrador\model\Matrix.class
+com\matrix\orquestrador\model\StepResult.class
+com\matrix\orquestrador\model\TableData.class
