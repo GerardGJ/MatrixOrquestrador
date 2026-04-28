@@ -10,15 +10,29 @@ public class Application {
         OrchestrationReport report = orchestrator.run();
 
         System.out.println("=== Orchestration Summary ===");
+        System.out.printf(
+                "executionId=%s | start=%s | end=%s | durationMs=%d%n",
+                report.getExecutionId(),
+                report.getStartTime(),
+                report.getEndTime(),
+                report.getDurationMillis()
+        );
         report.getExecutions().forEach(execution -> System.out.printf(
-                "%s | start=%s | end=%s | durationMs=%d | outputRows=%d%n",
+                "%s | %s | dependencies=%s | status=%s | start=%s | end=%s | durationMs=%d | outputRows=%d | %s%n",
+                execution.getProcessId(),
                 execution.getProcessName(),
+                execution.getDependencyIds(),
+                execution.getStatus(),
                 execution.getStartTime(),
                 execution.getEndTime(),
                 execution.getDurationMillis(),
-                execution.getOutputRows()
+                execution.getOutputRows(),
+                execution.getMessage()
         ));
 
+        System.out.println();
+        System.out.println("Generated report:");
+        System.out.println(report.getGeneratedReport());
         System.out.println();
         System.out.println("Matrix Q:");
         System.out.println(report.getMatrixQ());
