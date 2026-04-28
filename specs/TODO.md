@@ -6,45 +6,45 @@ Build a flexible Java orchestrator that is easy to change and extend. The orches
 
 ## Core Requirements
 
-- [ ] Design the orchestrator around a DAG (Directed Acyclic Graph) of processes.
-- [ ] Ensure each process runs only after all its required predecessor processes have finished successfully.
-- [ ] Support parallel execution for independent processes in the DAG.
-- [ ] Allow the DAG definition to be easy to modify when new processes are added or dependencies change.
-- [ ] Define a clear process contract so each process has:
-  - [ ] A unique identifier.
-  - [ ] A name/description.
-  - [ ] A list of dependencies.
-  - [ ] An executable action.
-  - [ ] A standard output/result structure.
+- [x] Design the orchestrator around a DAG (Directed Acyclic Graph) of processes.
+- [x] Ensure each process runs only after all its required predecessor processes have finished successfully.
+- [x] Support parallel execution for independent processes in the DAG.
+- [x] Allow the DAG definition to be easy to modify when new processes are added or dependencies change.
+- [x] Define a clear process contract so each process has:
+  - [x] A unique identifier.
+  - [x] A name/description.
+  - [x] A list of dependencies.
+  - [x] An executable action.
+  - [x] A standard output/result structure.
 
 ## Execution Control
 
-- [ ] Implement DAG validation to detect invalid graphs and cycles before execution starts.
-- [ ] Build a scheduler/executor that:
-  - [ ] Finds processes whose dependencies are already completed.
-  - [ ] Runs ready processes.
-  - [ ] Dispatches independent processes in parallel when possible.
-  - [ ] Waits for dependent processes to finish before continuing downstream execution.
+- [x] Implement DAG validation to detect invalid graphs and cycles before execution starts.
+- [x] Build a scheduler/executor that:
+  - [x] Finds processes whose dependencies are already completed.
+  - [x] Runs ready processes.
+  - [x] Dispatches independent processes in parallel when possible.
+  - [x] Waits for dependent processes to finish before continuing downstream execution.
 - [ ] Define failure behavior:
   - [ ] Stop the whole execution on a critical process failure, or
-  - [ ] Mark dependent processes as blocked/skipped.
+- [x] Mark dependent processes as blocked/skipped.
 - [ ] Decide and document whether retries are supported for failed processes.
 
 ## Logging And Metrics
 
-- [ ] Log execution metadata for every process in the DAG.
-- [ ] For each process, capture:
-  - [ ] Start time.
-  - [ ] End time.
-  - [ ] Total execution time.
-  - [ ] Output size in number of rows.
-  - [ ] Final status (`SUCCESS`, `FAILED`, `SKIPPED`, etc.).
-- [ ] Store logs in a structured format that can be reused for console output, persistence, and PDF export.
-- [ ] Add run-level metadata:
-  - [ ] Execution ID.
-  - [ ] Global start time.
-  - [ ] Global end time.
-  - [ ] Total orchestrator duration.
+- [x] Log execution metadata for every process in the DAG.
+- [x] For each process, capture:
+  - [x] Start time.
+  - [x] End time.
+  - [x] Total execution time.
+  - [x] Output size in number of rows.
+  - [x] Final status (`SUCCESS`, `FAILED`, `SKIPPED`, etc.).
+- [x] Store logs in a structured format that can be reused for console output, persistence, and PDF export.
+- [x] Add run-level metadata:
+  - [x] Execution ID.
+  - [x] Global start time.
+  - [x] Global end time.
+  - [x] Total orchestrator duration.
 
 ## PDF Reporting
 
@@ -64,9 +64,9 @@ Build a flexible Java orchestrator that is easy to change and extend. The orches
 
 ## Suggested Architecture Tasks
 
-- [ ] Create a `ProcessNode` model to represent each process in the DAG.
-- [ ] Create a `ProcessExecutionLog` model for process-level metrics.
-- [ ] Create a `RunExecutionReport` model for the full orchestration result.
+- [x] Create a `ProcessNode` model to represent each process in the DAG.
+- [x] Create a `ProcessExecutionLog` model for process-level metrics.
+- [x] Create a `RunExecutionReport` model for the full orchestration result.
 - [ ] Separate responsibilities into components:
   - [ ] DAG builder/parser.
   - [ ] DAG validator.
@@ -79,10 +79,10 @@ Build a flexible Java orchestrator that is easy to change and extend. The orches
 
 ## Near-Term Implementation Plan
 
-- [ ] Replace the current linear dummy orchestration with DAG-based execution.
-- [ ] Add support for parallel process execution using Java concurrency utilities.
-- [ ] Expand the current process tracking so it includes process status and run-level metadata.
-- [ ] Add a final aggregation step that collects all process logs.
+- [x] Replace the current linear dummy orchestration with DAG-based execution.
+- [x] Add support for parallel process execution using Java concurrency utilities.
+- [x] Expand the current process tracking so it includes process status and run-level metadata.
+- [x] Add a final aggregation step that collects all process logs.
 - [ ] Implement PDF export from the aggregated execution logs.
 - [ ] Add sample DAG definitions for testing:
   - [ ] Pure sequential flow.
