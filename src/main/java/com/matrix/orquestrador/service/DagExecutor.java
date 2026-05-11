@@ -1,11 +1,13 @@
 package com.matrix.orquestrador.service;
 
 import com.matrix.orquestrador.model.OrchestrationReport;
+import com.matrix.orquestrador.model.Matrix;
 import com.matrix.orquestrador.model.ProcessContext;
 import com.matrix.orquestrador.model.ProcessExecution;
 import com.matrix.orquestrador.model.ProcessNode;
 import com.matrix.orquestrador.model.ProcessOutput;
 import com.matrix.orquestrador.model.ProcessStatus;
+import com.matrix.orquestrador.model.TableData;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -120,6 +122,7 @@ public class DagExecutor {
             ProcessOutput output = node.getAction().execute(context);
             LocalDateTime endTime = LocalDateTime.now();
             context.putOutput(node.getId(), output);
+            OutputMetrics outputMetrics = measure(output);
             ProcessExecution execution = new ProcessExecution(
                     node.getId(),
                     node.getName(),
@@ -127,7 +130,9 @@ public class DagExecutor {
                     ProcessStatus.SUCCESS,
                     startTime,
                     endTime,
-                    output.getRowCount(),
+                    outputMetrics.rows(),
+                    outputMetrics.columns(),
+                    outputMetrics.length(),
                     output.getDescription()
             );
             context.addExecution(execution);
@@ -141,6 +146,8 @@ public class DagExecutor {
                     ProcessStatus.FAILED,
                     startTime,
                     endTime,
+                    0,
+                    0,
                     0,
                     exception.getMessage()
             );
@@ -158,8 +165,32 @@ public class DagExecutor {
                 null,
                 null,
                 0,
+                0,
+                0,
                 "Skipped because dependencies did not succeed: " + String.join(", ", failedDependencies)
         );
+    }
+
+    private OutputMetrics measure(ProcessOutput output) {
+        Object value = output.getValue();
+        if (value instanceof Matrix matrix) {
+            return new OutputMetrics(
+                    matrix.getRowCount(),
+                    matrix.getColumnCount(),
+                    matrix.getRowCount() * matrix.getColumnCount()
+            );
+        }
+        if (value instanceof TableData tableData) {
+            return new OutputMetrics(
+                    tableData.getRowCount(),
+                    tableData.getColumnCount(),
+                    tableData.getRowCount() * tableData.getColumnCount()
+            );
+        }
+        return new OutputMetrics(output.getRowCount(), 0, 0);
+    }
+
+    private record OutputMetrics(int rows, int columns, int length) {
     }
 
     private Map<String, ProcessNode> mapById(List<ProcessNode> nodes) {

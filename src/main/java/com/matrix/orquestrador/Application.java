@@ -1,13 +1,20 @@
 package com.matrix.orquestrador;
 
 import com.matrix.orquestrador.model.OrchestrationReport;
+import com.matrix.orquestrador.service.ExecutionReportPdfWriter;
 import com.matrix.orquestrador.service.MatrixOrchestrator;
+
+import java.nio.file.Path;
 
 public class Application {
 
     public static void main(String[] args) {
         MatrixOrchestrator orchestrator = new MatrixOrchestrator();
         OrchestrationReport report = orchestrator.run();
+        Path pdfPath = new ExecutionReportPdfWriter().write(
+                report,
+                Path.of("target", "execution-report-" + report.getExecutionId() + ".pdf")
+        );
 
         System.out.println("=== Orchestration Summary ===");
         System.out.printf(
@@ -18,7 +25,7 @@ public class Application {
                 report.getDurationMillis()
         );
         report.getExecutions().forEach(execution -> System.out.printf(
-                "%s | %s | dependencies=%s | status=%s | start=%s | end=%s | durationMs=%d | outputRows=%d | %s%n",
+                "%s | %s | dependencies=%s | status=%s | start=%s | end=%s | durationMs=%d | outputRows=%d | matrixLength=%s | %s%n",
                 execution.getProcessId(),
                 execution.getProcessName(),
                 execution.getDependencyIds(),
@@ -27,6 +34,7 @@ public class Application {
                 execution.getEndTime(),
                 execution.getDurationMillis(),
                 execution.getOutputRows(),
+                execution.getMatrixLengthDescription(),
                 execution.getMessage()
         ));
 
@@ -40,5 +48,6 @@ public class Application {
         System.out.println(report.getMatrixP());
         System.out.println("Result matrix:");
         System.out.println(report.getResultMatrix());
+        System.out.println("PDF report: " + pdfPath.toAbsolutePath());
     }
 }

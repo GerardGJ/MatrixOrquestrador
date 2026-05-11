@@ -29,4 +29,8 @@ public class TableData {
     public int getRowCount() {
         return rows.length;
     }
+
+    public int getColumnCount() {
+        return columns.size();
+    }
 }
