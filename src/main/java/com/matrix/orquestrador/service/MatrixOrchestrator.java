@@ -129,14 +129,14 @@ public class MatrixOrchestrator {
         String executionRows = executions.stream()
                 .sorted(Comparator.comparing(ProcessExecution::getStartTime, Comparator.nullsLast(Comparator.naturalOrder())))
                 .map(execution -> String.format(
-                        "%s | %s | status=%s | start=%s | end=%s | durationMs=%d | outputRows=%d",
+                        "%s | %s | status=%s | start=%s | end=%s | durationMs=%d | matrixLength=%s",
                         execution.getProcessId(),
                         execution.getProcessName(),
                         execution.getStatus(),
                         execution.getStartTime(),
                         execution.getEndTime(),
                         execution.getDurationMillis(),
-                        execution.getOutputRows()
+                        execution.getMatrixLengthDescription()
                 ))
                 .collect(Collectors.joining(System.lineSeparator()));
 

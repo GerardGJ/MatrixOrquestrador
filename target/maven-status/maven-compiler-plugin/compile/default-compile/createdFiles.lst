@@ -1,4 +1,5 @@
 com\matrix\orquestrador\Application.class
+com\matrix\orquestrador\service\ExecutionReportPdfWriter.class
 com\matrix\orquestrador\model\ProcessExecution.class
 com\matrix\orquestrador\model\ProcessContext.class
 com\matrix\orquestrador\service\DagExecutor.class
@@ -8,6 +9,7 @@ com\matrix\orquestrador\model\ProcessOutput.class
 com\matrix\orquestrador\model\StepResult.class
 com\matrix\orquestrador\service\DagValidator.class
 com\matrix\orquestrador\model\TableData.class
+com\matrix\orquestrador\service\DagExecutor$OutputMetrics.class
 com\matrix\orquestrador\model\OrchestrationReport.class
 com\matrix\orquestrador\model\ProcessStatus.class
 com\matrix\orquestrador\service\MatrixOrchestrator.class

@@ -14,6 +14,8 @@ public class ProcessExecution {
     private final LocalDateTime endTime;
     private final long durationMillis;
     private final int outputRows;
+    private final int outputColumns;
+    private final int outputLength;
     private final String message;
 
     public ProcessExecution(
@@ -26,6 +28,32 @@ public class ProcessExecution {
             int outputRows,
             String message
     ) {
+        this(
+                processId,
+                processName,
+                dependencyIds,
+                status,
+                startTime,
+                endTime,
+                outputRows,
+                0,
+                outputRows,
+                message
+        );
+    }
+
+    public ProcessExecution(
+            String processId,
+            String processName,
+            List<String> dependencyIds,
+            ProcessStatus status,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
+            int outputRows,
+            int outputColumns,
+            int outputLength,
+            String message
+    ) {
         this.processId = processId;
         this.processName = processName;
         this.dependencyIds = List.copyOf(dependencyIds);
@@ -36,6 +64,8 @@ public class ProcessExecution {
                 ? 0
                 : Duration.between(startTime, endTime).toMillis();
         this.outputRows = outputRows;
+        this.outputColumns = outputColumns;
+        this.outputLength = outputLength;
         this.message = message;
     }
 
@@ -69,6 +99,21 @@ public class ProcessExecution {
 
     public int getOutputRows() {
         return outputRows;
+    }
+
+    public int getOutputColumns() {
+        return outputColumns;
+    }
+
+    public int getOutputLength() {
+        return outputLength;
+    }
+
+    public String getMatrixLengthDescription() {
+        if (outputRows <= 0 || outputColumns <= 0) {
+            return "N/A";
+        }
+        return outputRows + " x " + outputColumns + " = " + outputLength + " values";
     }
 
     public String getMessage() {
